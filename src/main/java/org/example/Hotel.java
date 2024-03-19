@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.List;
 
+//@Table(name = "hotels")
 public class Hotel extends User{
 	
 	private String hotelName;

@@ -1,8 +1,11 @@
 package org.example;
 
+//
 public class Review {
 	
 	private int reviewId;
+	
+	private String comment;
 	
 	//@ManyToOne
     //@JoinColumn(name = "guest_id")
@@ -15,8 +18,7 @@ public class Review {
 	//@ManyToOne
     //@JoinColumn(name = "reservation_id")
 	private Reservation reservation;
-	
-	private String comment;
+
 
 	public Review() {
 	}

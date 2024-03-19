@@ -2,37 +2,92 @@ package org.example;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
+	
 	public static void main(String[] args) {
+		
+	
 
 		System.out.println("All hotels ;\n");
+		
 		for (Hotel hotel : getHotels()) {
 			System.out.println("Hotel id : " + hotel.getId() + "\nHotel name : " + hotel.getHotelName()
 					+ "\nHotel address : " + hotel.getAddress());
-			
+
 			System.out.println("Hotel services : ");
 			for (HotelService hotelService : getHotelServicesByHotelId(hotel.getId())) {
 				System.out.println("\t- " + hotelService.getServiceName());
 			}
-			
+
 			System.out.println("Hotel reviews : ");
 			for (Review review : getReviewsByHotelId(hotel.getId())) {
 				System.out.println("\t- " + review.getComment());
 			}
 			System.out.println("----------------------------");
-			
+
 		}
-		
+
 		System.out.println("***************************************************************************");
-		
+
 		System.out.println("All guestes ;\n");
 		for (Guest guest : getGuestes()) {
 			System.out.println("Guest id : " + guest.getId() + "\n" + guest.getName());
+			
+			//System.out.println(getPaymentsByGuestId(guest.getId()).get(0));
+			for (Payment payment : getPaymentsByGuestId(guest.getId())) {
+				System.out.println("\t- " + "Payment date : " + payment.getDate());
+				System.out.println("\t- Payment amount : "+ payment.getAmount());
+			}
+			
 			System.out.println("----------------------------");
 		}
+		
+		System.out.println("***************************************************************************");
 
+	}
+	
+	public static List<Payment> getPaymentsByHotelId(int hotelId) {
+		List<Payment> payments = new ArrayList<>();
+		
+		List<Payment> findedPaymentsByHotelId = new ArrayList<>();
+
+
+		for (Payment payment : payments) {
+			if (payment.getGuest().getId() == hotelId) {
+				findedPaymentsByHotelId.add(payment);
+			}
+		}
+
+		return findedPaymentsByHotelId;
+	}
+
+	public static List<Payment> getPaymentsByGuestId(int guestId) {
+
+		List<Payment> payments = new ArrayList<>();
+		
+		List<Payment> findedPaymentsByGuestId = new ArrayList<>();
+		
+		Date now = new Date();
+
+		Payment payment1 = new Payment();
+		payment1.setGuest(getGuestes().get(0));
+		payment1.setHotel(getHotels().get(0));
+		payment1.setAmount(15000.5);
+		payment1.setDate(now);
+		payment1.setMethod(EPaymentMethod.CASH);
+		
+		payments.add(payment1);
+
+		for (Payment payment : payments) {
+			if (payment.getGuest().getId() == guestId) {
+				findedPaymentsByGuestId.add(payment);
+			}
+		}
+
+		return findedPaymentsByGuestId;
 	}
 
 	public static List<Hotel> getHotels() {
@@ -69,46 +124,46 @@ public class Main {
 		return hotels;
 	}
 
-	public static List<Guest> getGuestes(){
+	public static List<Guest> getGuestes() {
 
-    	List<Guest> guests = new ArrayList<>();
-    	
-    	Guest guest1 = new Guest();
-    	guest1.setId(3);
-    	guest1.setUserName("guestonur");
-    	guest1.setEmail("guestonur@gmail.com");
-    	guest1.setPassword("123321");
-    	guest1.setPhoneNumber("5555555555");
-    	guest1.setName("Onur Akkoyun");
-    	guest1.addRole(new Role(1, ERole.ROLE_USER));
-    	guest1.addRole(new Role(3, ERole.ROLE_GUEST));
-    	
-    	Guest guest2 = new Guest();
-    	guest2.setId(4);
-    	guest2.setUserName("guestzahide");
-    	guest2.setEmail("guestzahide@gmail.com");
-    	guest2.setPassword("123321");
-    	guest2.setPhoneNumber("5555555555");
-    	guest2.setName("Zahide Aksak");
-    	guest2.addRole(new Role(1, ERole.ROLE_USER));
-    	guest2.addRole(new Role(3, ERole.ROLE_GUEST));
-    	
-    	Guest guest3 = new Guest();
-    	guest3.setId(5);
-    	guest3.setUserName("guestsamet");
-    	guest3.setEmail("guestsamet@gmail.com");
-    	guest3.setPassword("123321");
-    	guest3.setPhoneNumber("5555555555");
-    	guest3.setName("Samet Çiftçi");
-    	guest3.addRole(new Role(1, ERole.ROLE_USER));
-    	guest3.addRole(new Role(3, ERole.ROLE_GUEST));
-    	
-    	guests.add(guest1);
-    	guests.add(guest2);
-    	guests.add(guest3);
-    	
-    	return guests;
-    }
+		List<Guest> guests = new ArrayList<>();
+
+		Guest guest1 = new Guest();
+		guest1.setId(3);
+		guest1.setUserName("guestonur");
+		guest1.setEmail("guestonur@gmail.com");
+		guest1.setPassword("123321");
+		guest1.setPhoneNumber("5555555555");
+		guest1.setName("Onur Akkoyun");
+		guest1.addRole(new Role(1, ERole.ROLE_USER));
+		guest1.addRole(new Role(3, ERole.ROLE_GUEST));
+
+		Guest guest2 = new Guest();
+		guest2.setId(4);
+		guest2.setUserName("guestzahide");
+		guest2.setEmail("guestzahide@gmail.com");
+		guest2.setPassword("123321");
+		guest2.setPhoneNumber("5555555555");
+		guest2.setName("Zahide Aksak");
+		guest2.addRole(new Role(1, ERole.ROLE_USER));
+		guest2.addRole(new Role(3, ERole.ROLE_GUEST));
+
+		Guest guest3 = new Guest();
+		guest3.setId(5);
+		guest3.setUserName("guestsamet");
+		guest3.setEmail("guestsamet@gmail.com");
+		guest3.setPassword("123321");
+		guest3.setPhoneNumber("5555555555");
+		guest3.setName("Samet Çiftçi");
+		guest3.addRole(new Role(1, ERole.ROLE_USER));
+		guest3.addRole(new Role(3, ERole.ROLE_GUEST));
+
+		guests.add(guest1);
+		guests.add(guest2);
+		guests.add(guest3);
+
+		return guests;
+	}
 
 	public static List<HotelService> getHotelServicesByHotelId(int hotelId) {
 		List<HotelService> hotelServices = new ArrayList<>();
@@ -199,7 +254,7 @@ public class Main {
 	private static List<Review> getReviewsByHotelId(int hotelId) {
 
 		List<Review> reviews = new ArrayList<>();
-		
+
 		List<Review> findedReviewsByHotelId = new ArrayList<>();
 
 		Review review1 = new Review();
@@ -209,7 +264,7 @@ public class Main {
 		review1.setComment("Hotel is massive and great!");
 
 		reviews.add(review1);
-		
+
 		for (Review review : reviews) {
 			if (review.getHotel().getId() == hotelId) {
 				findedReviewsByHotelId.add(review);

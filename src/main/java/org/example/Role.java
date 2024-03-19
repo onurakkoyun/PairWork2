@@ -1,6 +1,7 @@
 package org.example;
 
 public class Role {
+	
     private int id;
     private ERole name;
 
